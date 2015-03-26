@@ -13,7 +13,5 @@ angular.module 'projectRobinApp'
   		.success (data) ->
   			$scope.message = 'data loaded!'
   			$scope.data = data
-  			$scope.first_field = data[0].field_name
-  			$scope.first_cm = data[0].cms[0].cm_name
     ]
 		

@@ -23,10 +23,11 @@ angular.module 'projectRobinApp'
     ]
 
 boxGridPlot = (element, data, opts) ->
-	cms = data[0].cms
+	cms = data.cms
 	cm_row_height = 25
-	y_margin = 80
-	svg_height = cms.length * cm_row_height + y_margin
+	top_axis_height = 80
+	legend_height = 0
+	svg_height = cms.length * cm_row_height + top_axis_height + legend_height
 	svg = d3.select(element[0])
 			.append('svg')
 			.attr 'height', svg_height
@@ -36,11 +37,16 @@ boxGridPlot = (element, data, opts) ->
 	time_scale = d3.time.scale()
 					.domain( [start_date, end_date] )
 					.range([120, 300])
+	center_color = '#ffffb3'
+	dist_to_center_color = 0.001
+	start_colors = ['#1b9e77','#d95f02','#7570b3','#e7298a'] #Color Brewer Dark2
+	color_scale = chroma.scale([chroma.interpolate(center_color, start_colors[2], dist_to_center_color), start_colors[2]]).mode('lch')
 	x_axis = d3.svg.axis().scale(time_scale).orient('top')
 	d3.select 'svg' 
 		.append 'g' 
 		.attr 'class', 'x axis'
-		.attr 'transform','translate(0,60)'
+		.attr 'transform', () ->
+			'translate(0,' + (top_axis_height * 0.75) + ')'
 		.call(x_axis)
 		.selectAll 'text'
 		.style 'text-anchor', 'start'
@@ -54,7 +60,7 @@ boxGridPlot = (element, data, opts) ->
 		.append 'g'
 		.attr('class','cm_row')
 		.attr "transform", (d,i) ->
-			"translate(0," + (i * cm_row_height + y_margin) + ")"
+			"translate(0," + (i * cm_row_height + top_axis_height + legend_height) + ")"
 		
 
 	cm_rows.append 'text'
@@ -64,7 +70,7 @@ boxGridPlot = (element, data, opts) ->
 
 	data_boxes = cm_rows.selectAll('rect')
 					.data (d) ->
-						d.samples
+						d.fields[0].samples
 					.enter()
 					.append 'rect'
 					.attr 'height', 5
@@ -72,3 +78,5 @@ boxGridPlot = (element, data, opts) ->
 					.attr 'x', (d, i) ->
 						time_scale( new Date(d.date))
 					.attr 'y', 2.5
+					.style 'fill', (d) ->
+						color_scale(d.level_value)

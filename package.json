@@ -1,7 +1,11 @@
 {
   "name": "projectrobin",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.12.3",
+    "gzippo": "^0.2.0",
+    "morgan": "^1.5.2"
+  },
   "repository": {},
   "devDependencies": {
     "coffee-script": "^1.9.1",
