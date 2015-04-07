@@ -16,7 +16,7 @@ angular.module 'projectRobinApp'
       		boxGridPlot(element, scope.data, attrs)
     controller: ['$scope', '$http', ($scope, $http) ->
     	$scope.getData = () ->
-    		$http.get 'data/data.json'
+    		$http.get 'data/3429339.json'
   				.success (data) ->
   					$scope.message = 'data loaded!'
   					$scope.data = data
@@ -122,7 +122,7 @@ boxGridPlot = (element, data, opts) ->
 	#Add rows
 	cm_rows = svg.selectAll '.cm_row'
 		.data cms, (cm) ->
-			cm.pid
+			cm.person_id
 		.enter()
 		.append 'g'
 		.attr('class','cm_row')
@@ -132,7 +132,7 @@ boxGridPlot = (element, data, opts) ->
 	#Add CM name to row
 	cm_rows.append 'text'
 		.text (d) ->
-			d.cm_name
+			d.cm_full_name
 		.attr('alignment-baseline', 'hanging')
 
 	field_samples = cm_rows.selectAll('.field_samples')
@@ -154,7 +154,7 @@ boxGridPlot = (element, data, opts) ->
 					.attr 'width', 5
 					.attr 'x', (d, i) ->
 						p_i = d3.select(this.parentNode).datum().index
-						time_scales[p_i]( new Date(d.date))
+						time_scales[p_i]( new Date(d.iso_date))
 					.attr 'y', 2.5
 					.style 'fill', (d, i) ->
 						p_i = d3.select(this.parentNode).datum().index

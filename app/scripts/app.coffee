@@ -28,6 +28,9 @@ angular
       .when '/box_grid_viz',
         templateUrl: 'views/box_grid_viz.html'
         controller: 'BoxGridVizCtrl'
+      .when '/register_staff',
+        templateUrl: 'views/register_staff.html'
+        controller: 'StaffIdCtrl'
       .otherwise
         redirectTo: '/'
 
