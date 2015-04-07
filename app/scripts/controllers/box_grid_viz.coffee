@@ -8,10 +8,12 @@
  # Controller of the projectRobinApp
 ###
 angular.module 'projectRobinApp'
-  .controller 'BoxGridVizCtrl', ['$scope', '$http', ($scope, $http) ->
-  		$http.get 'data/3593696.json'
+  .controller 'BoxGridVizCtrl', ['$scope', '$http', 'staffIdService', ($scope, $http, staffIdService) ->
+  		staff_id = staffIdService.get()
+  		$http.get 'data/' + staff_id + '.json'
   		.success (data) ->
-  			$scope.message = 'data loaded!'
   			$scope.data = data
+  		.error (data, status) ->
+  			console.log 'Unable to load data for staff with id ' + staff_id
     ]
 		

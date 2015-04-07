@@ -14,13 +14,6 @@ angular.module 'projectRobinApp'
       scope.$watch 'data', (values) ->
       	if values
       		boxGridPlot(element, scope.data, attrs)
-    controller: ['$scope', '$http', ($scope, $http) ->
-    	$scope.getData = () ->
-    		$http.get 'data/3429339.json'
-  				.success (data) ->
-  					$scope.message = 'data loaded!'
-  					$scope.data = data
-    ]
 
 boxGridPlot = (element, data, opts) ->
 	cms = data.cms
