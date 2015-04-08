@@ -25,12 +25,13 @@ angular
       .when '/about',
         templateUrl: 'views/about.html'
         controller: 'AboutCtrl'
-      .when '/box_grid_viz',
+      .when '/box_grid_viz/:staff_id?',
         templateUrl: 'views/box_grid_viz.html'
-        controller: 'BoxGridVizCtrl'
       .when '/register_staff',
         templateUrl: 'views/register_staff.html'
         controller: 'StaffIdCtrl'
+      .when '/tracking',
+        templateUrl: 'views/set_tracking.html'
       .otherwise
         redirectTo: '/'
 

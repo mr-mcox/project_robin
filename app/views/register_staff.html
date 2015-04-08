@@ -1,6 +1,13 @@
 <span ng-controller="StaffIdCtrl as ctrl">
+<h3>Please enter your staff Id below in order to access your personalized visualization</h3>
+<p>If you do not know your staff id, please contact matthew.cox@teachforamerica.org</p>
 <form ng-submit="ctrl.set_id()">
 	<input type="text" ng-model="ctrl.staff_id">
 	<input type="submit" value="Submit">
 </form>
+<span ng-show="ctrl.logged_in_staff_id">
+	<div class="well">
+		You are logged in with staff ID {{ctrl.logged_in_staff_id}}. You can access <a ng-href="#/box_grid_viz">a personalized visualization for this id here</a>
+	</div>
+</span>
 </span>

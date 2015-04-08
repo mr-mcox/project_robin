@@ -32,7 +32,7 @@ boxGridPlot = (element, data, opts) ->
 			.attr 'height', svg_height
 			.attr 'width', svg_width
 	start_date = new Date(2014,8,1)
-	end_date = new Date(2015,3,1)
+	end_date = new Date(2015,4,1)
 	time_scales = []
 	
 	for i in [0..(legend_data.length-1)] by 1
@@ -66,6 +66,7 @@ boxGridPlot = (element, data, opts) ->
 				.attr 'y', legend_height
 				.attr 'x', field_area_width / 2
 				.style 'text-anchor', 'middle'
+				.style 'font-weight', 'bold'
 				.each (d, i)->
 					d.index = i
 
@@ -100,6 +101,7 @@ boxGridPlot = (element, data, opts) ->
 		x_axis = d3.svg.axis()
 						.scale(time_scale)
 						.orient('top')
+						.tickFormat(d3.time.format("%b"))
 		d3.select 'svg' 
 			.append 'g' 
 			.attr 'class', 'x axis'
@@ -108,9 +110,9 @@ boxGridPlot = (element, data, opts) ->
 			.call(x_axis)
 			.selectAll 'text'
 			.style 'text-anchor', 'start'
-			.attr 'dx', '.5em'
-			.attr 'dy', '.5em'
-			.attr 'transform', 'rotate(-45)'
+			.attr 'dx', '0.5em'
+			.attr 'dy', '0.7em'
+			.attr 'transform', 'rotate(-90)'
 
 	#Add rows
 	cm_rows = svg.selectAll '.cm_row'

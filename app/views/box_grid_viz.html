@@ -1,1 +1,4 @@
+<span ng-controller="BoxGridVizCtrl as ctrl">
 <span d3-box-grid></span>
+<span ng-show="ctrl.data_error_message"><div class="well"> There was an error loading your data: "{{ctrl.data_error_message}}". You should probably log in <a ng-href="#/register_staff">here</a></div></span>
+</span>
