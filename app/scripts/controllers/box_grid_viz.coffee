@@ -16,6 +16,7 @@ angular.module 'projectRobinApp'
             staffIdService.set($routeParams.staff_id)
         staff_id = staffIdService.get()
         $http.get 'data/' + staff_id + '.json'
+        #$http.get 'https://s3.amazonaws.com/projectrobinjson/' + staff_id + '.json'
         .success (data) ->
             $scope.data = data
         .error (data, status) ->

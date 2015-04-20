@@ -67,17 +67,14 @@ body {
   }
 }
 
+.axis line,
 .axis path{
   fill: none;
   stroke: black;
 }
 
-.grid .tick {
-    stroke: lightgrey;
-    opacity: 0.7;
-}
-.grid path {
-      stroke-width: 0;
+.tick line{
+    opacity: 0.1;
 }
 
 /* Responsive: Portrait tablets and up */

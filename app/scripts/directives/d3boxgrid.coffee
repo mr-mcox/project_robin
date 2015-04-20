@@ -101,6 +101,8 @@ boxGridPlot = (element, data, opts) ->
 		x_axis = d3.svg.axis()
 						.scale(time_scale)
 						.orient('top')
+						.innerTickSize(-cm_area_height)
+						.outerTickSize(0)
 						.tickFormat(d3.time.format("%b"))
 		d3.select 'svg' 
 			.append 'g' 
