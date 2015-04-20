@@ -19,8 +19,12 @@ boxGridPlot = (element, data, opts) ->
 	cms = data.cms
 	legend_data = data.legend
 	cm_row_height = 25
-	top_axis_height = 100
-	legend_height = 100
+	top_axis_height = 50
+	level_count = 7
+	legend_spacing = 14
+	legend_height = legend_spacing *  ( level_count + 1 )
+	field_label_height = 15
+	field_label_bottom_margin = 5
 	cm_name_width = 120
 	field_area_width = 200
 	field_area_margin = 30
@@ -49,9 +53,7 @@ boxGridPlot = (element, data, opts) ->
 		color_scales.push(chroma.scale([chroma.interpolate(center_color, start_colors[i], dist_to_center_color), start_colors[i]]).mode('lch'))
 	
 	#Add legend boxes
-	level_count = 7
-	legend_spacing = field_area_width / level_count
-	legend_item_start = legend_spacing / 2
+	legend_item_start = 0
 	legend_data = data['legend']
 	legend_groups = svg.selectAll '.legend'
 						.data legend_data
@@ -63,7 +65,7 @@ boxGridPlot = (element, data, opts) ->
 	legend_groups.append 'text'
 				.text (d)->
 					d.field_label
-				.attr 'y', legend_height
+				.attr 'y', field_label_height
 				.attr 'x', field_area_width / 2
 				.style 'text-anchor', 'middle'
 				.style 'font-weight', 'bold'
@@ -77,7 +79,7 @@ boxGridPlot = (element, data, opts) ->
 								.append 'g'
 								.attr 'class', 'legend_level'
 								.attr 'transform', (d,i) ->
-									'translate(' + (i * legend_spacing + legend_item_start) + "," + (legend_height - 30) + ')'
+									'translate(' + legend_item_start + "," + (i * legend_spacing + field_label_height + field_label_bottom_margin) + ')'
 								.each (d)->
 									d.leg_num = d3.select(this.parentNode).datum().index
 								
@@ -89,11 +91,10 @@ boxGridPlot = (element, data, opts) ->
 						color_scales[p_i](d.level_value)
 	legend_items.append 'text'
 					.text (d) ->
-						d.field_value
+						d.truncated_field_value
 					.style 'text-anchor', 'start'
-					.attr 'transform', 'rotate(-45)'
-					.attr 'dx', '0.5em'
-					.attr 'dy', '-.1em'
+					.attr 'dx', 13
+					.attr 'dy', 10
 
 
 	#Add axis
@@ -147,7 +148,7 @@ boxGridPlot = (element, data, opts) ->
 						d.samples
 					.enter()
 					.append 'rect'
-					.attr 'height', 5
+					.attr 'height', 10
 					.attr 'width', 5
 					.attr 'x', (d, i) ->
 						p_i = d3.select(this.parentNode).datum().index
