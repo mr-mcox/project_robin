@@ -15,6 +15,27 @@ angular.module 'projectRobinApp'
       	if values
       		boxGridPlot(element, scope.data, attrs)
 
+sortCMs = (i) ->
+	console.log "Sorting CMs using index " + i
+	cm_row_height = 25
+	top_axis_height = 50
+	level_count = 7
+	legend_spacing = 14
+	button_height = 30
+	button_margin = 10
+	legend_height = legend_spacing *  ( level_count + 1 ) + button_height + (button_margin * 2)
+	sortOrder = (a, b)->
+		 b.sort_orders[i].cm_order_by_field_level - a.sort_orders[i].cm_order_by_field_level
+
+	d3.selectAll '.cm_row'
+		.sort(sortOrder)
+		.transition()
+		.delay (d, i)->
+			i * 10
+		.duration 1000
+		.attr "transform", (d,i) ->
+			"translate(0," + (i * cm_row_height + top_axis_height + legend_height) + ")"
+
 boxGridPlot = (element, data, opts) ->
 	cms = data.cms
 	legend_data = data.legend
@@ -22,7 +43,10 @@ boxGridPlot = (element, data, opts) ->
 	top_axis_height = 50
 	level_count = 7
 	legend_spacing = 14
-	legend_height = legend_spacing *  ( level_count + 1 )
+	button_height = 30
+	button_width = 100
+	button_margin = 10
+	legend_height = legend_spacing *  ( level_count + 1 ) + button_height + (button_margin * 2)
 	field_label_height = 15
 	field_label_bottom_margin = 5
 	cm_name_width = 120
@@ -157,3 +181,23 @@ boxGridPlot = (element, data, opts) ->
 					.style 'fill', (d, i) ->
 						p_i = d3.select(this.parentNode).datum().index
 						color_scales[p_i](d.level_value)
+
+	#Add buttons
+	sort_buttons = legend_groups.append 'g'
+						.attr 'transform', (d,i)->
+							'translate(' + (field_area_width - button_width)/2 + ',' + ((7 * legend_spacing) + field_label_height + field_label_bottom_margin + button_margin) + ')'
+						.on "click", (d, i)->
+							sortCMs(i)
+
+	sort_buttons.append 'rect'
+			.attr 'height', button_height
+			.attr 'width', button_width
+			.style 'fill', '#1a1d75'
+
+	sort_buttons.append 'text'
+			.attr 'y', button_height / 2
+			.attr 'x', button_width / 2
+			.style 'text-anchor', 'middle'
+			.text 'Sort Field'
+			.style 'fill', 'white'
+			

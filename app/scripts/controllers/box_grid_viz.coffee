@@ -7,6 +7,7 @@
  # # BoxGridVizCtrl
  # Controller of the projectRobinApp
 ###
+
 angular.module 'projectRobinApp'
   .controller 'BoxGridVizCtrl', ['$scope', '$http', '$routeParams', 'GAService', 'staffIdService', ($scope, $http, $routeParams, GAService, staffIdService) ->
         self = this
